@@ -1,9 +1,9 @@
 import configparser
-import random        # TODO дороботать диалог с пользователем
+import random
 import graphics
 
 
-def get_config(path: str):  # return type?
+def get_config(path: str) -> configparser:
     config = configparser.ConfigParser()
     config.read(path)
     return config
@@ -33,9 +33,26 @@ def input_validation(string: str, hidden_word: str) -> bool:
         if "а" <= string <= "я" or string == "ё":
             return True
     else:
+        print("Введите букву русского алфавита")
         return False
 
 
+# def user_input(hidden_word: str, hidden_mask: list, entered_letters: list, errors_count: int) -> str:
+#     letter = input("Введите букву: ").lower()
+#     if not input_validation(letter, hidden_word):
+#         continue
+#     if letter == hidden_word:
+#         break
+#     if letter in hidden_word:
+#         hidden_mask = update_mask(letter, hidden_word, hidden_mask)
+#     else:
+#         if letter not in hidden_mask:
+#             errors_count += 1
+#             entered_letters.append(letter)
+#     print("Количество ошибок: ", errors_count)
+#     return letter
+#
+#
 def hangman_rendering(state: int) -> None:
     print(graphics.hangman_graphics[state])
 
