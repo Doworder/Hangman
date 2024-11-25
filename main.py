@@ -1,42 +1,34 @@
 import configparser
-import random
+import random        # TODO дороботать диалог с пользователем
 import graphics
 
 
-def get_config(path):
-    # if not os.path.exists(path):
-    #     create_config(path)
-
+def get_config(path: str):  # return type?
     config = configparser.ConfigParser()
     config.read(path)
     return config
 
 
-def get_setting(path, section, setting):
+def get_setting(path: str, section: str, setting: str) -> str:
     config = get_config(path)
     value = config.get(section, setting)
-    # msg = "{section} {setting} is {value}".format(
-    #     section=section, setting=setting, value=value
-    # )
-    #
-    # print(msg)
     return value
 
 
-def get_word(dictionary):
+def get_word(dictionary: str) -> str:
     with open(dictionary) as file:
         word = random.choice(file.read().splitlines())
     return word
 
 
-def update_mask(string, hidden_word, hidden_mask):
+def update_mask(string: str, hidden_word: str, hidden_mask: list) -> list:
     for i, item in enumerate(hidden_word):
         if string == item:
             hidden_mask[i] = string
     return hidden_mask
 
 
-def input_validation(string, hidden_word):
+def input_validation(string: str, hidden_word: str) -> bool:
     if len(string) == 1 or len(string) == len(hidden_word):
         if "а" <= string <= "я" or string == "ё":
             return True
@@ -44,11 +36,11 @@ def input_validation(string, hidden_word):
         return False
 
 
-def hangman_rendering(state):
+def hangman_rendering(state: int) -> None:
     print(graphics.hangman_graphics[state])
 
 
-def game(hidden_word):
+def game(hidden_word: str) -> None:
     errors_count = 0
     entered_letters = []
     hidden_mask = [" _ "] * len(hidden_word)
@@ -80,7 +72,7 @@ def game(hidden_word):
         print("Победа!", "Вы отгадали слово", sep="\n")
 
 
-def start_game():
+def start_game() -> None:
     while True:
         user_answer = input("Сыграем?(д/н):").lower()
         if user_answer == "n" or user_answer == "н":
