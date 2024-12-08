@@ -1,6 +1,7 @@
 import configparser
 import random
-import graphics
+
+from graphics import hangman_graphics as graph
 
 
 def get_config(path: str) -> configparser:
@@ -41,7 +42,7 @@ def input_validation(string: str, hidden_word: str) -> bool:
 
 
 def hangman_rendering(state: int) -> None:
-    print(graphics.hangman_graphics[state])
+    print(graph[state])
 
 
 def game(hidden_word: str) -> None:
@@ -82,7 +83,7 @@ def start_game() -> None:
         if user_answer == "n" or user_answer == "н":
             break
 
-        game_dictionary = get_setting("settings.ini", "Settings", "dictionary")
+        game_dictionary = get_setting("../data/settings.ini", "Settings", "dictionary")
         hidden_word = get_word(game_dictionary)
 
         game(hidden_word)
