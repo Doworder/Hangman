@@ -79,7 +79,7 @@ def game(hidden_word: str) -> None:
 
 def start_game() -> None:
     while True:
-        user_answer = input("Сыграем?(д/н):").lower()
+        user_answer = input("Сыграем? (Нажмите любую клавишу для продолжения ИЛИ н - для выхода): ").lower()
         if user_answer == "n" or user_answer == "н":
             break
 
