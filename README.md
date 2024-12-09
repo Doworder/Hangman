@@ -19,12 +19,12 @@
 
 Клонируем репозиторий:
 ```shell
-git clone https://github.com/???/hangman.git
+git clone https://github.com/Doworder/Hangman.git
 ```
 
 Переходим в папку hangman:
 ```shell
-cd hangman
+cd Hangman
 ```
 
 ## Использование
