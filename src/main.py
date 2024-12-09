@@ -93,8 +93,8 @@ if __name__ == "__main__":
     try:
         start_game()
 
-    except FileNotFoundError:  # Exception as e:
-        # print("Возникла ошибка", e)
+    except Exception as e:
+        print("Возникла ошибка", e)
         exit(1)
 
     finally:
