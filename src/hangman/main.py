@@ -83,7 +83,7 @@ def start_game() -> None:
         if user_answer == "n" or user_answer == "н":
             break
 
-        game_dictionary = get_setting("../data/settings.ini", "Settings", "dictionary")
+        game_dictionary = get_setting("../../config.ini", "Settings", "dictionary")
         hidden_word = get_word(game_dictionary)
 
         game(hidden_word)
