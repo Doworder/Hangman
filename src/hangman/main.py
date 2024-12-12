@@ -84,7 +84,7 @@ def start_game() -> None:
             break
 
         game_dictionary = get_setting("../../config.ini", "Settings", "dictionary")
-        hidden_word = get_word(game_dictionary)
+        hidden_word = get_word("../../data/" + game_dictionary)
 
         game(hidden_word)
 
