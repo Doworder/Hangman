@@ -27,17 +27,24 @@ git clone https://github.com/Doworder/Hangman.git
 cd Hangman
 ```
 
+## Настройки
+
+Настройки приложения доступны в файле config.ini
+```
+[Settings]
+locale = ru
+dictionary = words.txt
+```
+Для ключа dictionary доступны следующие значения:
+ - words.txt - значение по умолчанию
+ - test.txt - файл с одним словом, для тестирования приложения
+
 ## Использование
 
 Запускаем скрипт:
 ```shell
-python src/main.py
-```
-
-или
-
-```shell
-python -m src.main
+# LINUX
+python3 src/hangman/main.py
 ```
 
 В дальнейшем - следуем указаниям на экране.
