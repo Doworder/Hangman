@@ -83,20 +83,19 @@ def start_game() -> None:
         if user_answer == "n" or user_answer == "н":
             break
 
-        game_dictionary = get_setting("../../config.ini", "Settings", "dictionary")
-        hidden_word = get_word("../../data/" + game_dictionary)
+        game_dictionary = get_setting("config.ini", "Settings", "dictionary")
+        hidden_word = get_word("data/" + game_dictionary)
 
         game(hidden_word)
 
 
 if __name__ == "__main__":
-    start_game()
-    # try:
-    #     start_game()
-    #
-    # except Exception as e:
-    #     print("Возникла ошибка", e)
-    #     exit(1)
-    #
-    # finally:
-    #     exit(0)
+    try:
+        start_game()
+
+    except Exception as e:
+        print("Возникла ошибка", e)
+        exit(1)
+
+    finally:
+        exit(0)
