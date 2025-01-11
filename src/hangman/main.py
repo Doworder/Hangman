@@ -1,10 +1,13 @@
+# TODO fix naming
+# TODO
+
 import configparser
 import random
 
 from graphics import hangman_graphics as graph
 
 
-def get_config(path: str) -> configparser:
+def get_config(path: str) -> configparser:  # TODO linters, typechekers
     config = configparser.ConfigParser()
     config.read(path)
     return config
@@ -16,20 +19,20 @@ def get_setting(path: str, section: str, setting: str) -> str:
     return value
 
 
-def get_word(dictionary: str) -> str:
-    with open(dictionary) as file:
+def get_word(dictionary_path: str) -> str:
+    with open(dictionary_path) as file:
         word = random.choice(file.read().splitlines())
     return word
 
 
-def update_mask(string: str, hidden_word: str, hidden_mask: list) -> list:
+def update_mask(string: str, hidden_word: str, hidden_mask: list[str]) -> None:
     for i, item in enumerate(hidden_word):
         if string == item:
             hidden_mask[i] = string
     return hidden_mask
 
 
-def input_validation(string: str, hidden_word: str) -> bool:
+def input_validation(string: str, hidden_word: str) -> bool:  # TODO rename, peredelat voobshe
     if len(string) == 1 or len(string) == len(hidden_word):
         if "а" <= string <= "я" or string == "ё":
             return True
@@ -47,7 +50,7 @@ def hangman_rendering(state: int) -> None:
 
 def game(hidden_word: str) -> None:
     errors_count = 0
-    entered_letters = []
+    entered_letters = set()
     hidden_mask = [" _ "] * len(hidden_word)
     while errors_count < 6:
         hangman_rendering(errors_count)
@@ -62,7 +65,7 @@ def game(hidden_word: str) -> None:
         else:
             if letter not in entered_letters:
                 errors_count += 1
-                entered_letters.append(letter)
+                entered_letters.add(letter)
         print("Количество ошибок: ", errors_count)
         if " _ " not in hidden_mask:
             print(*hidden_mask)
