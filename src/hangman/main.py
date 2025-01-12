@@ -11,15 +11,15 @@ def get_config(path: str) -> ConfigParser:
 
 
 def get_setting(path: str, section: str, setting: str) -> str:
-    config = get_config(path)
-    value = config.get(section, setting)
+    config: ConfigParser = get_config(path)
+    value: str = config.get(section, setting)
     return value
 
 
 def get_word(dictionary_path: str) -> str:
     try:
         with open(dictionary_path) as file:
-            word = choice(file.read().splitlines())
+            word: str = choice(file.read().splitlines())
         return word
 
     except FileNotFoundError:
@@ -72,26 +72,31 @@ def game(hidden_word: str) -> None:
         # if " _ " not in hidden_mask:
         #     print(*hidden_mask)
         #     break
+    end_game(errors_count, entered_letters, hidden_word)
 
-    if errors_count == 6:
-        hangman_rendering(errors_count)
+
+def start_game() -> None:
+    while True:
+        user_answer: str = input("Сыграем? (Нажмите любую клавишу для продолжения ИЛИ н - для выхода): ").lower()
+        if user_answer == "n" or user_answer == "н":
+            break
+
+        game_dictionary: str = get_setting("config.ini", "Settings", "dictionary")
+        hidden_word: str = get_word("data/" + game_dictionary)
+
+        game(hidden_word)
+
+
+def end_game(state: int, used_letters: set[str], hidden_word: str) -> None:
+    if state == 6:
+        hangman_rendering(state)
         print("Вы проиграли!")
-        print("Использованные буквы: ", entered_letters)
+        print("Использованные буквы: ", used_letters)
         print("Загаданное слово: ", hidden_word.upper())
     else:
         print("Победа!", "Вы отгадали слово", sep="\n")
 
 
-def start_game() -> None:
-    while True:
-        user_answer = input("Сыграем? (Нажмите любую клавишу для продолжения ИЛИ н - для выхода): ").lower()
-        if user_answer == "n" or user_answer == "н":
-            break
-
-        game_dictionary = get_setting("config.ini", "Settings", "dictionary")
-        hidden_word = get_word("data/" + game_dictionary)
-
-        game(hidden_word)
 
 
 if __name__ == "__main__":
