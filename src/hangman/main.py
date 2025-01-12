@@ -32,16 +32,35 @@ def update_mask(string: str, hidden_word: str, hidden_mask: list[str]) -> None:
             hidden_mask[i] = string
 
 
-
-def input_validation(string: str, hidden_word: str) -> bool:  # TODO rename, peredelat voobshe
-    if len(string) == 1 or len(string) == len(hidden_word):
-        if "а" <= string <= "я" or string == "ё":
-            return True
+def make_input(entered_letters: set, hidden_word: str, current_locale: str) -> str:
+    while True:
+        input_data = input("Введите букву: ").lower()
+        if input_data == hidden_word:
+            return input_data
+        elif len(input_data) > 1:
+            print("Введите одну букву")
+        elif input_data in entered_letters:
+            print("Вы уже вводили эту букву!")
+        elif input_data.isalpha() and is_current_alphabet(current_locale, input_data):
+            entered_letters.add(input_data)
+            return input_data
         else:
-            print("Введите букву русского алфавита")
+            print("Это не буква!")
+
+
+def is_current_alphabet(current_locale: str, symbol: str) -> bool:
+    match current_locale:
+        case "ru":
+            return is_cyrillic_symbol(symbol)
+        case _:
             return False
+
+
+def is_cyrillic_symbol(string: str,) -> bool:
+    if "а" <= string <= "я" or string == "ё":
+        return True
     else:
-        print("Введите одну букву")
+        print("Введите букву русского алфавита")
         return False
 
 
@@ -50,28 +69,24 @@ def hangman_rendering(state: int) -> None:
 
 
 def game(hidden_word: str) -> None:
+    settings_file: str = "config.ini"
     errors_count: int = 0
     entered_letters: set[str] = set()
-    mask_symbol: str = get_setting("config.ini", "Settings", "mask_symbol")
+    mask_symbol: str = get_setting(settings_file, "Settings", "mask_symbol")
+    current_locale: str = get_setting(settings_file, "Settings", "locale")
     hidden_mask: list[str] = [mask_symbol] * len(hidden_word)
-    while errors_count < 6 and (mask_symbol in str(hidden_mask)):
+    while mask_symbol in str(hidden_mask) and errors_count < 6:
         hangman_rendering(errors_count)
         print(*hidden_mask)
-        letter = input("Введите букву: ").lower()
-        if not input_validation(letter, hidden_word):
-            continue
+        letter: str = make_input(entered_letters, hidden_word, current_locale)
         if letter == hidden_word:
             break
         if letter in hidden_word:
             update_mask(letter, hidden_word, hidden_mask)
         else:
-            if letter not in entered_letters:
-                errors_count += 1
-                entered_letters.add(letter)
+            errors_count += 1
+
         print("Количество ошибок: ", errors_count)
-        # if " _ " not in hidden_mask:
-        #     print(*hidden_mask)
-        #     break
     end_game(errors_count, entered_letters, hidden_word)
 
 
@@ -94,9 +109,7 @@ def end_game(state: int, used_letters: set[str], hidden_word: str) -> None:
         print("Использованные буквы: ", used_letters)
         print("Загаданное слово: ", hidden_word.upper())
     else:
-        print("Победа!", "Вы отгадали слово", sep="\n")
-
-
+        print("Победа!", f"Вы отгадали слово: {hidden_word.upper()}", sep="\n")
 
 
 if __name__ == "__main__":
