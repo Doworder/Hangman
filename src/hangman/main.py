@@ -1,7 +1,7 @@
 from configparser import ConfigParser
 from random import choice
 
-from graphics import hangman_graphics as graph
+from hangman.graphics import hangman_graphics as graph
 
 
 def get_config(path: str) -> ConfigParser:
@@ -23,7 +23,8 @@ def get_word(dictionary_path: str) -> str:
         return word
 
     except FileNotFoundError:
-        print(f'Не найден файл со словами для игры! Обратитесь к разработчику')
+        print('Не найден файл со словами для игры! Обратитесь к разработчику')
+        return ''
 
 
 def update_mask(string: str, hidden_word: str, hidden_mask: list[str]) -> None:
@@ -113,13 +114,12 @@ def end_game(state: int, used_letters: set[str], hidden_word: str) -> None:
 
 
 if __name__ == "__main__":
-    start_game()
-    # try:
-    #     start_game()
-    #
-    # except Exception as e:
-    #     print("Возникла ошибка", e)
-    #     exit(1)
-    #
-    # finally:
-    #     exit(0)
+    try:
+        start_game()
+
+    except Exception as e:
+        print("Возникла ошибка", e)
+        exit(1)
+
+    finally:
+        exit(0)
