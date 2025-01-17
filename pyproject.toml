@@ -12,4 +12,4 @@ authors = [
 ]
 description = "My first pet project from Sergey Zhukov's roadmap"
 readme = "README.md"
-license = "MIT"
+license = {text = "MIT"}
