@@ -13,38 +13,48 @@
 5. После каждой введенной буквы в консоль выводится зашифрованное слово (с уже отгаданными буквами), счётчик ошибок и текущее состояние виселицы (нарисованное ASCII символами)
 6. По завершении игра выводит результат и возвращается к состоянию #1 - предложение начать новую игру или выйти из приложения.
 
-[ТЗ проекта](https://zhukovsd.github.io/python-backend-learning-course/projects/hangman/)
+### [ТЗ проекта](https://zhukovsd.github.io/python-backend-learning-course/projects/hangman/)
 
 ## Установка
 
-Клонируем репозиторий:
+#### Клонируем репозиторий:
 ```shell
 git clone https://github.com/Doworder/Hangman.git
 ```
 
-Переходим в папку hangman:
+#### Переходим в папку Hangman:
 ```shell
 cd Hangman
 ```
 
-## Настройки
+#### Создаём виртуальное окружение:
+```shell
+python -m venv venv
+```
 
-Настройки приложения доступны в файле config.ini
+#### Активируем виртуальное окружение:
+
+Windows
+```shell
+venv\Scripts\activate.bat
 ```
-[Settings]
-locale = ru
-dictionary = words.txt
+
+Linux и MacOS
+```shell
+source venv/bin/activate
 ```
-Для ключа dictionary доступны следующие значения:
- - words.txt - значение по умолчанию
- - test.txt - файл с одним словом, для тестирования приложения
+
+#### Запускаем установку:
+```shell
+pip install .
+```
+
 
 ## Использование
 
-Запускаем скрипт:
+#### Запускаем скрипт:
 ```shell
-# LINUX
-python3 src/hangman/main.py
+python -m src.hangman.main
 ```
 
 В дальнейшем - следуем указаниям на экране.
