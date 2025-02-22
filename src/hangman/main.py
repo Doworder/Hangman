@@ -65,7 +65,7 @@ def is_cyrillic_symbol(symbol: str, ) -> bool:
         return False
 
 
-def hangman_rendering(state: int) -> None:
+def show_hangman_state(state: int) -> None:
     print(GRAPHIC_STATE[state])
 
 
@@ -77,7 +77,7 @@ def game(hidden_word: str) -> None:
     current_locale: str = get_setting(settings_file, "Settings", "locale")
     mask: list[str] = [mask_symbol] * len(hidden_word)
     while mask_symbol in str(mask) and errors_count < 6:
-        hangman_rendering(errors_count)
+        show_hangman_state(errors_count)
         print(*mask)
         letter: str = make_input(entered_letters, hidden_word, current_locale)
         if letter == hidden_word:
@@ -105,7 +105,7 @@ def start_game() -> None:
 
 def print_end_state(state: int, used_letters: set[str], hidden_word: str) -> None:
     if state == 6:
-        hangman_rendering(state)
+        show_hangman_state(state)
         print("Вы проиграли!")
         print("Использованные буквы: ", used_letters)
         print("Загаданное слово: ", hidden_word.upper())
