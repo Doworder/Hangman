@@ -27,10 +27,10 @@ def get_word(dictionary_path: str) -> str:
         return ''
 
 
-def update_mask(string: str, hidden_word: str, hidden_mask: list[str]) -> None:
-    for i, item in enumerate(hidden_word):
-        if string == item:
-            hidden_mask[i] = string
+def update_mask(letter: str, hidden_word: str, mask: list[str]) -> None:
+    for i, symbol in enumerate(hidden_word):
+        if letter == symbol:
+            mask[i] = letter
 
 
 def make_input(entered_letters: set, hidden_word: str, current_locale: str) -> str:
