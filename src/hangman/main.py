@@ -1,7 +1,7 @@
 from configparser import ConfigParser
 from random import choice
 
-from hangman.graphics import hangman_graphics as graph
+from hangman.graphics import HANGMAN_GRAPHICS as GRAPHIC_STATE
 
 
 def get_config(path: str) -> ConfigParser:
@@ -66,7 +66,7 @@ def is_cyrillic_symbol(string: str,) -> bool:
 
 
 def hangman_rendering(state: int) -> None:
-    print(graph[state])
+    print(GRAPHIC_STATE[state])
 
 
 def game(hidden_word: str) -> None:
@@ -88,7 +88,7 @@ def game(hidden_word: str) -> None:
             errors_count += 1
 
         print("Количество ошибок: ", errors_count)
-    end_game(errors_count, entered_letters, hidden_word)
+    print_end_state(errors_count, entered_letters, hidden_word)
 
 
 def start_game() -> None:
@@ -103,7 +103,7 @@ def start_game() -> None:
         game(hidden_word)
 
 
-def end_game(state: int, used_letters: set[str], hidden_word: str) -> None:
+def print_end_state(state: int, used_letters: set[str], hidden_word: str) -> None:
     if state == 6:
         hangman_rendering(state)
         print("Вы проиграли!")
