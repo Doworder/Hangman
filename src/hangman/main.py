@@ -12,8 +12,8 @@ def get_config(path: str) -> ConfigParser:
 
 def get_setting(path: str, section: str, setting: str) -> str:
     config: ConfigParser = get_config(path)
-    value: str = config.get(section, setting)
-    return value
+    config_attribute: str = config.get(section, setting)
+    return config_attribute
 
 
 def get_word(dictionary_path: str) -> str:
@@ -57,8 +57,8 @@ def is_current_alphabet(current_locale: str, symbol: str) -> bool:
             return False
 
 
-def is_cyrillic_symbol(string: str,) -> bool:
-    if "а" <= string <= "я" or string == "ё":
+def is_cyrillic_symbol(symbol: str, ) -> bool:
+    if "а" <= symbol <= "я" or symbol == "ё":
         return True
     else:
         print("Введите букву русского алфавита")
