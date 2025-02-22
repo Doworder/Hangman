@@ -1,7 +1,7 @@
 from configparser import ConfigParser
 from random import choice
 
-from hangman.graphics import HANGMAN_GRAPHICS as GRAPHIC_STATE
+from hangman.graphics import HANGMAN_GRAPHICS as GRAPHIC_STATE  # type: ignore
 
 
 def get_config(path: str) -> ConfigParser:
@@ -62,13 +62,12 @@ def show_hangman_state(state: int) -> None:
 
 
 def play_game(hidden_word: str) -> None:
-    settings_file: str = "config.ini"
+
     errors_count: int = 0
     entered_letters: set[str] = set()
-    mask_symbol: str = get_setting(settings_file, "Settings", "mask_symbol")
 
-    mask: list[str] = [mask_symbol] * len(hidden_word)
-    while mask_symbol in str(mask) and errors_count < 6:
+    mask: list[str] = [MASK_SYMBOL] * len(hidden_word)
+    while MASK_SYMBOL in str(mask) and errors_count < 6:
         show_hangman_state(errors_count)
         print(*mask)
         letter: str = make_input(entered_letters, hidden_word)
@@ -89,8 +88,7 @@ def start_game() -> None:
         if user_answer == "n" or user_answer == "н":
             break
 
-        game_dictionary_name: str = get_setting("config.ini", "Settings", "dictionary")
-        hidden_word: str = get_word("data/" + game_dictionary_name)
+        hidden_word: str = get_word("data/" + GAME_DICTIONARY_NAME)
 
         play_game(hidden_word)
 
@@ -107,6 +105,9 @@ def print_end_state(state: int, used_letters: set[str], hidden_word: str) -> Non
 
 if __name__ == "__main__":
     try:
+        SETTINGS_FILE: str = "config.ini"
+        MASK_SYMBOL: str = get_setting(SETTINGS_FILE, "Settings", "mask_symbol")
+        GAME_DICTIONARY_NAME: str = get_setting("config.ini", "Settings", "dictionary")
         start_game()
 
     except Exception as e:
