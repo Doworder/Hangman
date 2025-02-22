@@ -69,7 +69,7 @@ def show_hangman_state(state: int) -> None:
     print(GRAPHIC_STATE[state])
 
 
-def game(hidden_word: str) -> None:
+def play_game(hidden_word: str) -> None:
     settings_file: str = "config.ini"
     errors_count: int = 0
     entered_letters: set[str] = set()
@@ -100,7 +100,7 @@ def start_game() -> None:
         game_dictionary: str = get_setting("config.ini", "Settings", "dictionary")
         hidden_word: str = get_word("data/" + game_dictionary)
 
-        game(hidden_word)
+        play_game(hidden_word)
 
 
 def print_end_state(state: int, used_letters: set[str], hidden_word: str) -> None:
