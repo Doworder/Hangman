@@ -75,15 +75,15 @@ def game(hidden_word: str) -> None:
     entered_letters: set[str] = set()
     mask_symbol: str = get_setting(settings_file, "Settings", "mask_symbol")
     current_locale: str = get_setting(settings_file, "Settings", "locale")
-    hidden_mask: list[str] = [mask_symbol] * len(hidden_word)
-    while mask_symbol in str(hidden_mask) and errors_count < 6:
+    mask: list[str] = [mask_symbol] * len(hidden_word)
+    while mask_symbol in str(mask) and errors_count < 6:
         hangman_rendering(errors_count)
-        print(*hidden_mask)
+        print(*mask)
         letter: str = make_input(entered_letters, hidden_word, current_locale)
         if letter == hidden_word:
             break
         if letter in hidden_word:
-            update_mask(letter, hidden_word, hidden_mask)
+            update_mask(letter, hidden_word, mask)
         else:
             errors_count += 1
 
