@@ -33,7 +33,7 @@ def update_mask(letter: str, hidden_word: str, mask: list[str]) -> None:
             mask[i] = letter
 
 
-def make_input(entered_letters: set, hidden_word: str, current_locale: str) -> str:
+def make_input(entered_letters: set, hidden_word: str) -> str:
     while True:
         input_data = input("Введите букву: ").lower()
         if input_data == hidden_word:
@@ -42,19 +42,11 @@ def make_input(entered_letters: set, hidden_word: str, current_locale: str) -> s
             print("Введите одну букву")
         elif input_data in entered_letters:
             print("Вы уже вводили эту букву!")
-        elif input_data.isalpha() and is_current_alphabet(current_locale, input_data):
+        elif input_data.isalpha():
             entered_letters.add(input_data)
             return input_data
         else:
             print("Это не буква!")
-
-
-def is_current_alphabet(current_locale: str, symbol: str) -> bool:
-    match current_locale:
-        case "ru":
-            return is_cyrillic_symbol(symbol)
-        case _:
-            return False
 
 
 def is_cyrillic_symbol(symbol: str, ) -> bool:
@@ -74,12 +66,12 @@ def play_game(hidden_word: str) -> None:
     errors_count: int = 0
     entered_letters: set[str] = set()
     mask_symbol: str = get_setting(settings_file, "Settings", "mask_symbol")
-    current_locale: str = get_setting(settings_file, "Settings", "locale")
+
     mask: list[str] = [mask_symbol] * len(hidden_word)
     while mask_symbol in str(mask) and errors_count < 6:
         show_hangman_state(errors_count)
         print(*mask)
-        letter: str = make_input(entered_letters, hidden_word, current_locale)
+        letter: str = make_input(entered_letters, hidden_word)
         if letter == hidden_word:
             break
         if letter in hidden_word:
