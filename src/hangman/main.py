@@ -33,25 +33,57 @@ def update_mask(letter: str, hidden_word: str, mask: list[str]) -> None:
             mask[i] = letter
 
 
+def is_hidden_word(user_input: str, hidden_word: str) -> bool:
+    if user_input == hidden_word:
+        return True
+
+    else:
+        return False
+
+
+def is_one_symbol(user_input: str) -> bool:
+    if len(user_input) != 1:
+        print("Введите одну букву")
+        return False
+
+    else:
+        return True
+
+
+def is_entered_letters(user_input: str, entered_letters: set) -> bool:
+    if user_input in entered_letters:
+        print("Вы уже вводили эту букву!")
+        return True
+
+    else:
+        return False
+
+
+def is_validate_input(user_input: str, entered_letters: set, hidden_word: str) -> bool:  # type: ignore
+    if is_hidden_word(user_input, hidden_word):
+        return True
+
+    elif user_input.isalpha():
+        if is_one_symbol(user_input):
+            if not is_entered_letters(user_input, entered_letters) and is_cyrillic_symbol(user_input):
+                return True
+
+    else:
+        print("Это не буква!")
+        return False
+
+
 def make_input(entered_letters: set, hidden_word: str) -> str:
     while True:
-        input_data = input("Введите букву: ").lower()
-        if input_data == hidden_word:
-            return input_data
-        elif len(input_data) > 1:
-            print("Введите одну букву")
-        elif input_data in entered_letters:
-            print("Вы уже вводили эту букву!")
-        elif input_data.isalpha():
-            entered_letters.add(input_data)
-            return input_data
-        else:
-            print("Это не буква!")
+        user_input = input("Введите букву: ").lower()
+        if is_validate_input(user_input, entered_letters, hidden_word):
+            return user_input
 
 
 def is_cyrillic_symbol(symbol: str, ) -> bool:
     if "а" <= symbol <= "я" or symbol == "ё":
         return True
+
     else:
         print("Введите букву русского алфавита")
         return False
