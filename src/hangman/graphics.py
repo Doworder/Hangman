@@ -1,4 +1,4 @@
-hangman_graphics = ["""
+HANGMAN_GRAPHICS = ["""
       _______
      |/      |
      |      
