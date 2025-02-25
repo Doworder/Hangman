@@ -99,11 +99,13 @@ def play_game(hidden_word: str) -> None:
     entered_letters: set[str] = set()
 
     mask: list[str] = [MASK_SYMBOL] * len(hidden_word)
+
     while MASK_SYMBOL in str(mask) and errors_count < 6:
         show_hangman_state(errors_count)
         print(*mask)
         letter: str = make_input(entered_letters, hidden_word)
-        if letter == hidden_word:
+        entered_letters.add(letter)
+        if is_hidden_word(letter, hidden_word):
             break
         if letter in hidden_word:
             update_mask(letter, hidden_word, mask)
